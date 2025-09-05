@@ -16,16 +16,19 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
+    public ResponseEntity<String> createTask(Task task) {
+        taskRepository.save(task);
+        return new ResponseEntity<>("task created successfully", HttpStatus.CREATED);
     }
-    public List<Task> getAllTasks() { return taskRepository.findAll(); }
+    public ResponseEntity<List<Task>> getAllTasks() {
+        return new ResponseEntity<>(taskRepository.findAll(), HttpStatus.OK);
+    }
     public ResponseEntity<String> deleteTask(int id) {
         taskRepository.deleteById(id);
-        return new ResponseEntity<>("Task deleted successfully.", HttpStatus.OK);
+        return new ResponseEntity<>("task deleted successfully", HttpStatus.OK);
     }
-    public Task updateTask(Task updatedTask) {
-        Task task = taskRepository.findById(updatedTask.getId()).orElseThrow(()-> new RuntimeException("Task does not exist."));
+    public ResponseEntity<Task> updateTask(Task updatedTask) {
+        Task task = taskRepository.findById(updatedTask.getId()).orElseThrow(()-> new RuntimeException("task does not exist"));
 
         if (updatedTask.getCategory() != null){ task.setCategory(updatedTask.getCategory()); }
         if (updatedTask.getStatus() != null){ task.setStatus(updatedTask.getStatus()); }
@@ -34,6 +37,6 @@ public class TaskService {
         if (updatedTask.getTitle() != null){ task.setTitle(updatedTask.getTitle()); }
         if (updatedTask.getDescription() != null){ task.setDescription(updatedTask.getDescription()); }
 
-        return taskRepository.save(task);
+        return new ResponseEntity<>(taskRepository.save(task), HttpStatus.OK);
     }
 }

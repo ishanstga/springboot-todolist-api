@@ -17,13 +17,17 @@ public class TaskController {
     }
 
     @PostMapping("create")
-    public Task createtask(@Valid @RequestBody Task task){
+    public ResponseEntity<String> createTask(@Valid @RequestBody Task task){
         return taskService.createTask(task);
     }
     @GetMapping("get")
-    public List<Task> getAllTasks(){ return taskService.getAllTasks(); }
+    public ResponseEntity<List<Task>> getAllTasks(){
+        return taskService.getAllTasks();
+    }
     @PatchMapping("patch")
-    public Task updateTask(@RequestBody Task task){ return taskService.updateTask(task); }
+    public ResponseEntity<Task> updateTask(@RequestBody Task task){
+        return taskService.updateTask(task);
+    }
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable("id") int id){
         return taskService.deleteTask(id);

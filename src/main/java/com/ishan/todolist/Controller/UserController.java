@@ -17,17 +17,19 @@ public class UserController {
     }
 
     @PostMapping("create")
-    public User createUser(@Valid @RequestBody User user){
+    public ResponseEntity<String> createUser(@Valid @RequestBody User user){
         return userService.createUser(user);
     }
     @GetMapping("get")
-    public List<User> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(){
         return userService.getAllUsers();
     }
     @PutMapping("put")
-    public User updateUser(@RequestBody User user){
+    public ResponseEntity<User> updateUser(@RequestBody User user){
         return userService.updateUser(user);
     }
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") int id){ return userService.deleteUser(id); }
+    public ResponseEntity<String> deleteUser(@PathVariable("id") int id){
+        return userService.deleteUser(id);
+    }
 }

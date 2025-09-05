@@ -15,17 +15,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public ResponseEntity<String> createUser(User user) {
+        userRepository.save(user);
+        return new ResponseEntity<>("user created successfully", HttpStatus.CREATED);
     }
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
-    public User updateUser(User user) {
+    public ResponseEntity<User> updateUser(User user) {
         User usr = userRepository.findById(user.getUserId()).orElseThrow(()-> new RuntimeException("User not found."));
         usr.setUsername(user.getUsername());
         userRepository.save(usr);
-        return usr;
+        return new ResponseEntity<>(usr, HttpStatus.OK);
     }
     public ResponseEntity<String> deleteUser(int id) {
         userRepository.deleteById(id);
