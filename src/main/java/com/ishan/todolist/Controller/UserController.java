@@ -2,6 +2,7 @@ package com.ishan.todolist.Controller;
 
 import com.ishan.todolist.model.User;
 import com.ishan.todolist.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping("create")
-    public User createUser(@RequestBody User user){
+    public User createUser(@Valid @RequestBody User user){
         return userService.createUser(user);
     }
     @GetMapping("get")

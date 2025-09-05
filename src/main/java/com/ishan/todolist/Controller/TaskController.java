@@ -2,6 +2,7 @@ package com.ishan.todolist.Controller;
 
 import com.ishan.todolist.Service.TaskService;
 import com.ishan.todolist.model.Task;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class TaskController {
     }
 
     @PostMapping("create")
-    public Task createtask(@RequestBody Task task){
+    public Task createtask(@Valid @RequestBody Task task){
         return taskService.createTask(task);
     }
     @GetMapping("get")
