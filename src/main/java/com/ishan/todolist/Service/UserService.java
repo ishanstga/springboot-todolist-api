@@ -1,6 +1,7 @@
 package com.ishan.todolist.Service;
 
 import com.ishan.todolist.Repository.UserRepository;
+import com.ishan.todolist.exception.UserNotFoundException;
 import com.ishan.todolist.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +24,13 @@ public class UserService {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
     public ResponseEntity<User> updateUser(User user) {
-        User usr = userRepository.findById(user.getUserId()).orElseThrow(()-> new RuntimeException("User not found."));
+        User usr = userRepository.findById(user.getUserId()).orElseThrow(()-> new UserNotFoundException("user does not exists"));
         usr.setUsername(user.getUsername());
         userRepository.save(usr);
         return new ResponseEntity<>(usr, HttpStatus.OK);
     }
     public ResponseEntity<String> deleteUser(int id) {
+        userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("user does not exists"));
         userRepository.deleteById(id);
         return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
     }
